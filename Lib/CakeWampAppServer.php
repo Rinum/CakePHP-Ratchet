@@ -17,7 +17,7 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
     }
     
     public function onPublish(Conn $conn, $topic, $event, array $exclude, array $eligible) {
-        $topic->broadcast($event);
+        $this->topics[$topic->getId()]->broadcast($event);
     }
 
     public function onCall(Conn $conn, $id, $topic, array $params) {
@@ -46,6 +46,8 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
             'topic' => $topic,
             'connectionData' => $this->connections[$conn->WAMP->sessionId],
         )));
+		
+		$this->topics[$topic->getId()]->broadcast('New subscriber!');
     }
     
     public function onUnSubscribe(Conn $conn, $topic) {
@@ -69,6 +71,7 @@ class CakeWampAppServer implements Ratchet\Wamp\WampServerInterface {
     public function onOpen(Conn $conn) {
         $this->connections[$conn->WAMP->sessionId] = array(
             'session' => $conn->Session->all(),
+			'conn' => $conn
         );
         
         CakeEventManager::instance()->dispatch(new CakeEvent('Rachet.WampServer.onOpen', $this, array(

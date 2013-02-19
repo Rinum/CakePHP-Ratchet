@@ -19,22 +19,8 @@ function connect() {
          
         sess.subscribe("ping",
             // on event publication callback
-            function (topic, event) {
-               connectionCountDraw(event);
-               console.log(topic);
-               console.log(event);
-                /*sess.call('callUrl', {
-                'url': url,
-                'data': data
-                }).then(
-                function (res) {
-                console.log(res);
-                callback(res[0]);
-                },
-                function (error, desc) {
-                console.log("error: " + desc);
-                }
-                );*/
+            function (topic, msg) {
+               console.log(msg);
          });
       },
 
