@@ -19,7 +19,8 @@
     "require": {
         "php": ">=5.3.3",
         "cboden/Ratchet": "0.2.*",
-        "composer/installers": "*"
+        "composer/installers": "*",
+        "react/zmq": "dev-master"
     },
     "config": { 
         "vendor-dir": "Vendor/" 
